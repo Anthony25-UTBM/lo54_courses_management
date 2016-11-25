@@ -1,18 +1,24 @@
 package com.lo54.courses_management.core.entity;
 
-/**
- * Created by anthony on 21/11/16.
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Course {
-    private int code;
+    @Id
+    @Column(name="code")
+    private int id;
+
     private String title;
 
-    public int getCode() {
-        return code;
+
+    public int getId() {
+        return id;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

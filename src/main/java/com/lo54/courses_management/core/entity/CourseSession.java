@@ -1,16 +1,24 @@
 package com.lo54.courses_management.core.entity;
 
 import java.util.Date;
+import javax.persistence.*;
 
-/**
- * Created by anthony on 21/11/16.
- */
+@Entity
 public class CourseSession {
+    @Id
+    @GeneratedValue
     private Integer id;
+
+    @ManyToOne
     private Course course;
+
+    @ManyToOne
     private Location location;
+
     private Date startDate;
+
     private Date endDate;
+
 
     public Integer getId() {
         return id;

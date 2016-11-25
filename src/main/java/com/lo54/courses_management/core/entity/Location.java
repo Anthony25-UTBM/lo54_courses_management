@@ -1,11 +1,17 @@
 package com.lo54.courses_management.core.entity;
 
-/**
- * Created by anthony on 21/11/16.
- */
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Location {
+    @Id
+    @GeneratedValue
     private int id;
+
     private String city;
+
 
     public int getId() {
         return id;

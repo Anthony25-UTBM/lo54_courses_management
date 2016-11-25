@@ -1,15 +1,27 @@
 package com.lo54.courses_management.core.entity;
 
-/**
- * Created by anthony on 21/11/16.
- */
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+@Entity
 public class Client {
+    @Id
+    @GeneratedValue
     private int id;
+
     private String lastname;
+
     private String firstname;
+
     private String phone;
+
     private String email;
+
+    @ManyToMany
     private CourseSession courseSession;
+
 
     public int getId() {
         return id;
