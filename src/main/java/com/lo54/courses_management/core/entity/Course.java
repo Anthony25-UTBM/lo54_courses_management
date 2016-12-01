@@ -3,9 +3,10 @@ package com.lo54.courses_management.core.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-public class Course {
+public class Course implements Serializable, Item {
     @Id
     @Column(name="code")
     private int id;

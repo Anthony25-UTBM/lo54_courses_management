@@ -4,9 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import java.io.Serializable;
 
 @Entity
-public class Client {
+public class Client implements Serializable, Item{
     @Id
     @GeneratedValue
     private int id;

@@ -26,9 +26,8 @@
         <module name="lo54_courses_management" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="lo54_course_sessions" target="1.5" />
-      <module name="lo54_courses_management" target="1.5" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="lo54_courses_management" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

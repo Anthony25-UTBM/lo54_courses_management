@@ -1,10 +1,11 @@
 package com.lo54.courses_management.core.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-public class CourseSession {
+public class CourseSession implements Serializable, Item {
     @Id
     @GeneratedValue
     private Integer id;
