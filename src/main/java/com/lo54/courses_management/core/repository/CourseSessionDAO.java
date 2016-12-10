@@ -16,42 +16,21 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseSessionDAO implements DAO {
+public class CourseSessionDAO extends DefaultDAO<CourseSession> {
 
     private final static Logger LOGGER = LoggerFactory
             .getLogger(CourseSessionDAO.class);
+    private Class<CourseSession> entityType = CourseSession.class;
 
-    @Override
-    public void insertEntity(final Item entity) {
-        DefaultDAO.insertEntity(entity);
-    }
-
-    @Override
-    public void updateEntity(final int id, final Item entity) {
-        DefaultDAO.updateEntity( id, CourseSession.class.getCanonicalName(), entity);
-    }
-
-    @Override
-    public void removeEntity(final int id) {
-        DefaultDAO.removeEntity(id, CourseSession.class.getCanonicalName());
-    }
-
-    @Override
-    public Item getEntity(final int id) {
-        return DefaultDAO.getEntity( id, CourseSession.class.getCanonicalName());
-    }
-
-    @Override
-    public List<Item> getEntities() {
-        return DefaultDAO.getEntities(CourseSession.class.getCanonicalName());
-    }
-
-    public List<Item> getEntitiesByTimeStamp(final Timestamp tmin, final Timestamp tmax) {
+    public List getEntitiesByTimeStamp(Timestamp tmin, Timestamp tmax) {
         final Session session = HibernateUtil.getSession();
-        List<Item> listEntities = null;
+        List listEntities = null;
 
         try {
-            Query query = session.createQuery("from " + CourseSession.class.getCanonicalName() + " c where c.startDate < :timeStampMax and c.startDate > :timeStampMin");
+            Query query = session.createQuery(
+                "from " + CourseSession.class.getCanonicalName() +
+                " c where c.startDate < :timeStampMax and c.startDate > :timeStampMin"
+            );
             query.setParameter("timeStampMin", tmin);
             query.setParameter("timeStampMax", tmax);
             listEntities = query.list();
@@ -61,31 +40,32 @@ public class CourseSessionDAO implements DAO {
         return listEntities;
     }
 
-    public List<Item> getEntitiesByLocation(final String filter) {
+    public List<CourseSession> getEntitiesByLocation(String filter) {
         final Session session = HibernateUtil.getSession();
-        List<Item> listEntities = null;
+        List listEntities = null;
 
         try {
-            Query query = session.createQuery("from " + Location.class.getCanonicalName() + " where city = :cityFilter");
+            Query query = session.createQuery(
+                "from " + Location.class.getCanonicalName() + " where city = :cityFilter"
+            );
             query.setParameter("cityFilter", filter);
             listEntities = query.list();
         }catch (HibernateException e) {
             LOGGER.error("getEntities" + e);
+            listEntities = new ArrayList();
         }
 
-        List<Item> listResult;
-        listResult = new ArrayList<>();
+        List<CourseSession> listResult = new ArrayList<>();
 
-        for(Item entity : listEntities) {
+        for(Object entity : listEntities) {
             Location location = (Location) entity;
 
-            List<Item> listEntities2 = null;
-
             try {
-                Query query = session.createQuery("from " + CourseSession.class.getCanonicalName() + " where location = :locationFilter");
+                Query query = session.createQuery(
+                    "from " + CourseSession.class.getCanonicalName() + " where location = :locationFilter"
+                );
                 query.setParameter("locationFilter", location);
-                listEntities2 = query.list();
-                listResult.addAll(listEntities2);
+                listResult.addAll(query.list());
             }catch (HibernateException e) {
                 LOGGER.error("getEntities" + e);
             }
@@ -93,24 +73,27 @@ public class CourseSessionDAO implements DAO {
         return listResult;
     }
 
-    public List<Item> getEntitiesByTitle(final String filter) {
+    public List<CourseSession> getEntitiesByTitle(String filter) {
         final Session session = HibernateUtil.getSession();
-        List<Item> listEntities = null;
+        List<Course> listEntities = null;
         try {
-            Query query = session.createQuery("from " + Course.class.getCanonicalName() + " where title like :titleFilter");
+            Query query = session.createQuery(
+                "from " + Course.class.getCanonicalName() + " where title like :titleFilter"
+            );
             query.setParameter("titleFilter", "%" + filter + "%");
             listEntities = query.list();
         }catch (HibernateException e) {
             LOGGER.error("getEntities" + e);
         }
 
-        List<Item> listEntities2 = null;
+        List<CourseSession> listEntities2 = null;
 
         if (listEntities != null) {
-            for(Item entity : listEntities) {
-                Course course = (Course) entity;
+            for(Course course : listEntities) {
                 try {
-                    Query query = session.createQuery("from " + CourseSession.class.getCanonicalName() + " where course like :code");
+                    Query query = session.createQuery(
+                        "from " + CourseSession.class.getCanonicalName() + " where course like :code"
+                    );
                     query.setParameter("code", course);
                     listEntities2 = query.list();
                 }catch (HibernateException e) {
