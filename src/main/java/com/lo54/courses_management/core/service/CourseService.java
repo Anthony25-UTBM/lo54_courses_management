@@ -1,6 +1,7 @@
 package com.lo54.courses_management.core.service;
 
 
+import com.lo54.courses_management.core.entity.Course;
 import com.lo54.courses_management.core.entity.Item;
 import com.lo54.courses_management.core.repository.CourseDAO;
 
@@ -15,11 +16,11 @@ public class CourseService implements Service{
     }
 
     public void storeEntity(Item entity) {
-        this.courseDao.insertEntity(entity);
+        this.courseDao.insertEntity((Course) entity);
     }
 
     public void updateEntity(int id, Item entity) {
-        this.courseDao.updateEntity(id, entity);
+        this.courseDao.updateEntity(id, (Course) entity);
     }
 
     public void removeEntity(int id) {
@@ -30,7 +31,7 @@ public class CourseService implements Service{
         return this.courseDao.getEntity(id);
     }
 
-    public List<Item> getEntities() {
+    public List getEntities() {
         return this.courseDao.getEntities();
     }
 }

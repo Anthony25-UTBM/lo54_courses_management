@@ -11,31 +11,31 @@ public interface Service {
      * To store an entity
      * @param entity
      */
-    void storeEntity(final Item entity);
+    void storeEntity(Item entity);
 
     /**
      * To update an entity
      * @param id
      * @param entity
      */
-    void updateEntity(final int id, final Item entity);
+    void updateEntity(int id, final Item entity);
 
     /**
      * To remove an entity
      * @param id
      */
-    void removeEntity(final int id);
+    void removeEntity(int id);
 
     /**
      * To get an entity by his id
      * @param id
      * @return
      */
-    Item getEntity(final int id);
+    Item getEntity(int id);
 
     /**
      * To get the list of entities
      * @return
      */
-    List<Item> getEntities();
+    List getEntities();
 }
