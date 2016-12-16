@@ -1,9 +1,6 @@
 package com.lo54.courses_management.core.service;
 
-import com.lo54.courses_management.core.entity.Client;
-import com.lo54.courses_management.core.entity.Course;
-import com.lo54.courses_management.core.entity.CourseSession;
-import com.lo54.courses_management.core.entity.Location;
+import com.lo54.courses_management.core.entity.*;
 import com.lo54.courses_management.core.repository.ClientDAO;
 import com.lo54.courses_management.core.repository.CourseDAO;
 import com.lo54.courses_management.core.repository.CourseSessionDAO;
@@ -23,16 +20,14 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by anthony on 16/12/16.
  */
-public class CourseSessionServiceTest extends HibernateTestHelper {
-    private CourseSessionService courseSessionService;
-    private CourseSession courseSession;
+public class CourseSessionServiceTest extends BaseServiceTest {
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        courseSessionService = new CourseSessionService();
+        service = new CourseSessionService();
 
-        courseSession = new CourseSession();
+        CourseSession courseSession = new CourseSession();
 
         courseSession.setClients(genClients(1));
         courseSession.setLocation(genLocation(0));
@@ -42,6 +37,8 @@ public class CourseSessionServiceTest extends HibernateTestHelper {
 
         CourseSessionDAO courseSessionDAO = new CourseSessionDAO();
         courseSessionDAO.insertEntity(courseSession);
+
+        item = courseSession;
     }
 
     private Set<Client> genClients(int nbClients) {
@@ -91,28 +88,20 @@ public class CourseSessionServiceTest extends HibernateTestHelper {
         return course;
     }
 
+    protected ArrayList<Item> storeMultipleTestingItems(int nbItems) throws Exception {
+        ArrayList<Item> courseSessions = new ArrayList<>();
 
-    @Test
-    public void storeEntity() throws Exception {
-        CourseSession testingCourseSession = storeMultipleTestingCourseSessions(1).get(0);
-
-        assertTrue(courseSessionService.getEntities().contains(testingCourseSession));
-    }
-
-    private ArrayList<CourseSession> storeMultipleTestingCourseSessions(int nbItems) throws Exception {
-        ArrayList<CourseSession> courseSessions = new ArrayList<>();
-
-        int startingId = 1;
+        int startingId = 2;
         for(int i = startingId; i < nbItems + startingId; i++) {
             CourseSession testingCourseSession = new CourseSession();
 
-            courseSession.setClients(genClients(2));
-            courseSession.setLocation(genLocation(i));
-            courseSession.setCourse(genCourse(i));
-            courseSession.setStartDate(new Date());
-            courseSession.setEndDate(new Date());
+            testingCourseSession.setClients(genClients(2));
+            testingCourseSession.setLocation(genLocation(i));
+            testingCourseSession.setCourse(genCourse(i));
+            testingCourseSession.setStartDate(new Date());
+            testingCourseSession.setEndDate(new Date());
 
-            courseSessionService.storeEntity(testingCourseSession);
+            service.storeEntity(testingCourseSession);
             courseSessions.add(testingCourseSession);
         }
 
@@ -121,33 +110,12 @@ public class CourseSessionServiceTest extends HibernateTestHelper {
 
     @Test
     public void updateEntity() throws Exception {
+        CourseSession courseSession = (CourseSession) item;
+
         courseSession.setLocation(genLocation(2));
-        courseSessionService.updateEntity(courseSession.getId(), courseSession);
+        service.updateEntity(courseSession.getId(), courseSession);
 
-        CourseSession storedCourseSession = (CourseSession) courseSessionService.getEntity(courseSession.getId());
+        CourseSession storedCourseSession = (CourseSession) service.getEntity(courseSession.getId());
         assertEquals(courseSession.getLocation(), storedCourseSession.getLocation());
-    }
-
-    @Test
-    public void removeEntity() throws Exception {
-        courseSessionService.removeEntity(courseSession.getId());
-        assertEquals(0, courseSessionService.getEntities().size());
-    }
-
-    @Test
-    public void getEntity() throws Exception {
-        CourseSession storedCourseSession = (CourseSession) courseSessionService.getEntity(courseSession.getId());
-        assertEquals(courseSession, storedCourseSession);
-    }
-
-    @Test
-    public void getEntities() throws Exception {
-        ArrayList<CourseSession> addedCourseSessions = storeMultipleTestingCourseSessions(10);
-        ArrayList<CourseSession> storedCourseSessions = (ArrayList<CourseSession>) courseSessionService.getEntities();
-
-        // Should contain `courseSession` + everything in addedCourseSessions
-        assertEquals(1 + addedCourseSessions.size(), storedCourseSessions.size());
-        // assertTrue(storedCourseSessions.contains(courseSession));
-        assertTrue(storedCourseSessions.containsAll(addedCourseSessions));
     }
 }

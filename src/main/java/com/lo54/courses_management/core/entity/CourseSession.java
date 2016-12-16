@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class CourseSession implements Serializable, Item {
     @Id
     @GeneratedValue
-    private Integer id;
+    private int id;
 
     @ManyToOne
     private Course course;
@@ -26,11 +26,11 @@ public class CourseSession implements Serializable, Item {
     private Date endDate;
 
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
