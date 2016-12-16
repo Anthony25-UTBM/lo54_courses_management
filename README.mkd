@@ -1,0 +1,6 @@
+LO54 project
+============
+
+[![Build Status](https://travis-ci.org/Anthony25-UTBM/lo54_courses_management.svg?branch=master)](https://travis-ci.org/Anthony25-UTBM/lo54_courses_management)  [![Coverage Status](https://coveralls.io/repos/github/Anthony25-UTBM/lo54_courses_management/badge.svg?branch=master)](https://coveralls.io/github/Anthony25-UTBM/lo54_courses_management?branch=master)
+
+LO54 project.
