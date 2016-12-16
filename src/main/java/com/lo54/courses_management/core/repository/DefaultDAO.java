@@ -4,6 +4,7 @@ import com.lo54.courses_management.core.entity.Item;
 import com.lo54.courses_management.core.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public abstract class DefaultDAO<T extends Item> {
 
-    private Logger LOGGER;
-    private Class<T> entityType;
+    protected Logger LOGGER;
+    protected Class<T> entityType;
 
     public DefaultDAO() {
         LOGGER = LoggerFactory.getLogger(this.getClass());
@@ -25,12 +26,15 @@ public abstract class DefaultDAO<T extends Item> {
      */
     public void insertEntity(T entity) {
         Session session = HibernateUtil.getSession();
+        Transaction tr = session.getTransaction();
         try {
-            session.beginTransaction();
+            tr.begin();
             session.persist(entity);
-            session.getTransaction().commit();
-        } catch(HibernateException e) {
+            tr.commit();
+        } catch(Exception e) {
             LOGGER.error("error in insertEntity: " + e);
+            if(tr != null)
+                tr.rollback();
         }
     }
 

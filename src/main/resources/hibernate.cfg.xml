@@ -17,5 +17,9 @@
 
         <property name="show_sql">true</property>
 
+        <mapping class="com.lo54.courses_management.core.entity.Client"/>
+        <mapping class="com.lo54.courses_management.core.entity.Course"/>
+        <mapping class="com.lo54.courses_management.core.entity.CourseSession"/>
+        <mapping class="com.lo54.courses_management.core.entity.Location"/>
     </session-factory>
 </hibernate-configuration>

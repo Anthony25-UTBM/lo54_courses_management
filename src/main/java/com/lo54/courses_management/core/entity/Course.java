@@ -13,7 +13,6 @@ public class Course implements Serializable, Item {
 
     private String title;
 
-
     public int getId() {
         return id;
     }

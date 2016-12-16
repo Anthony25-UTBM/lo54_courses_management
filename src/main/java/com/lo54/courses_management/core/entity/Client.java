@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Client implements Serializable, Item{
@@ -21,15 +23,11 @@ public class Client implements Serializable, Item{
     private String email;
 
     @ManyToMany
-    private CourseSession courseSession;
+    private Set<CourseSession> courseSessions = new HashSet<CourseSession>();
 
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getLastname() {
@@ -62,5 +60,13 @@ public class Client implements Serializable, Item{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<CourseSession> getCourseSessions() {
+        return courseSessions;
+    }
+
+    public void setCourseSessions(Set<CourseSession> courseSessions) {
+        this.courseSessions = courseSessions;
     }
 }

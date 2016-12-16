@@ -3,6 +3,7 @@ package com.lo54.courses_management.core.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 
 @Entity

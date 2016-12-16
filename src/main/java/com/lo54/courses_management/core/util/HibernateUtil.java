@@ -9,27 +9,33 @@ import org.hibernate.cfg.Configuration;
  */
 public class HibernateUtil {
 
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static SessionFactory sessionFactory;
     private static Session session = null;
+
+    public static SessionFactory getSessionFactory() {
+        if(sessionFactory == null) {
+            sessionFactory = buildSessionFactory();
+        }
+        return sessionFactory;
+    }
 
     private static SessionFactory buildSessionFactory() {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
             return new Configuration().configure().buildSessionFactory();
-
         } catch (Throwable ex) {
             System.err.println( "Initial SessionFactory creation failed." + ex );
             throw new ExceptionInInitializerError(ex);
         }
     }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public static void setSessionFactory(SessionFactory _sessionFactory) {
+        sessionFactory = _sessionFactory;
     }
 
     public static Session getSession(){
         if(session == null || !session.isOpen()) {
-            session = sessionFactory.openSession();
+            session = getSessionFactory().openSession();
         }
         return session;
     }

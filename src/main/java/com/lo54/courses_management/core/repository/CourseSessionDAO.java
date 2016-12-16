@@ -20,7 +20,11 @@ public class CourseSessionDAO extends DefaultDAO<CourseSession> {
 
     private final static Logger LOGGER = LoggerFactory
             .getLogger(CourseSessionDAO.class);
-    private Class<CourseSession> entityType = CourseSession.class;
+
+    public CourseSessionDAO() {
+        super();
+        entityType = CourseSession.class;
+    }
 
     public List getEntitiesByTimeStamp(Timestamp tmin, Timestamp tmax) {
         final Session session = HibernateUtil.getSession();

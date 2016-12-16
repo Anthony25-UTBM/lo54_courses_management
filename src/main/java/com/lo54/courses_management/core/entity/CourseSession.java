@@ -2,6 +2,8 @@ package com.lo54.courses_management.core.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,9 @@ public class CourseSession implements Serializable, Item {
 
     @ManyToOne
     private Location location;
+
+    @ManyToMany
+    private Set<Client> clients = new HashSet<Client>();
 
     private Date startDate;
 
@@ -59,5 +64,13 @@ public class CourseSession implements Serializable, Item {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Set<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(Set<Client> clients) {
+        this.clients = clients;
     }
 }
