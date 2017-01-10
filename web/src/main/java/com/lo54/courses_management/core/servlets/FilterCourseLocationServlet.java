@@ -3,6 +3,7 @@ package main.java.com.lo54.courses_management.core.servlets;
 
 import com.lo54.courses_management.core.entity.CourseSession;
 import com.lo54.courses_management.core.service.CourseSessionService;
+import com.lo54.courses_management.core.service.LocationService;
 import main.java.com.lo54.courses_management.core.servlets.util.Param;
 
 import javax.servlet.ServletException;
@@ -45,6 +46,9 @@ public class FilterCourseLocationServlet extends HttpServlet {
         if(listCoursesSession.size() < 1){
             listCoursesSession = courseSessionService.getEntities();
         }
+
+        //resets the list of locations but doesn't keep the last one selected
+        request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, new LocationService().getEntities());
         request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, listCoursesSession);
 
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);

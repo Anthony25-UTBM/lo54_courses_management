@@ -52,6 +52,9 @@ public class CourseSessionListServlet extends HttpServlet{
         LocationService locationService = new LocationService();
         locationService.storeEntity(location);
 
+        List<Location> listLoc = new LocationService().getEntities();
+        request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, listLoc);
+
         courseSession.setLocation(location);
 
         if(startDate.split("-").length == 3 && endDate.split("-").length == 3) {

@@ -23,14 +23,12 @@
         <br/>
     </form>
 
-    <form action="${pageContext.request.contextPath}/filterCourseLocationServlet" method="post" id="searchCourseByLocationForm" role="form">
-        <div>
-            <input type="text" name="fLocation" id="location" class="form-control" placeholder="Type the keyword you want to look for"/>
-        </div>
-        <button type="submit" class="btn btn-info">
-            <span class="glyphicon glyphicon-search"></span> Search location
-        </button>
-        <br/>
+    <form name="dropDownCities" action="${pageContext.request.contextPath}/filterCourseLocationServlet" method="post" id="searchCourseSessionByLocation" role="form">
+            <select name="fLocation" id="citiesDropDown" onchange="document.dropDownCities.submit()" class="selectpicker">
+                <c:forEach items="${locations}" var="locationOption" >
+                    <option>${locationOption.city}</option>
+                </c:forEach>
+            </select>
     </form>
 
 

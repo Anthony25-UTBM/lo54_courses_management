@@ -42,6 +42,9 @@ public class FilterCourseDateServlet extends HttpServlet {
         String sDate = request.getParameter(Param.DATE);
         String[] tabDate = sDate.split("-");
 
+        List<CourseSession> listCoursesSession = null;
+        CourseSessionService courseSessionService = new CourseSessionService();
+
         if(tabDate.length == 3) {
             int year = Integer.parseInt(tabDate[2]);
             int month = Integer.parseInt(tabDate[1]);
@@ -60,11 +63,16 @@ public class FilterCourseDateServlet extends HttpServlet {
             calendar.set(Calendar.DAY_OF_MONTH, day + 1);
             Timestamp endDate = new Timestamp(calendar.getTimeInMillis());
 
-            CourseSessionService courseSessionService = new CourseSessionService();
-            List<CourseSession> listCoursesSession = courseSessionService.getEntitiesByTimeStamp(startDate, endDate);
+            listCoursesSession = courseSessionService.getEntitiesByTimeStamp(startDate, endDate);
 
             request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, listCoursesSession);
         }
+
+        if(listCoursesSession.size() < 1){
+            listCoursesSession = courseSessionService.getEntities();
+        }
+
+        request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, listCoursesSession);
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);
       
     }
