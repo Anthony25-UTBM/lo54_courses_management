@@ -37,7 +37,6 @@ public class CourseServiceTest extends BaseServiceTest {
         int startingId = 1;
         for(int i = startingId; i < nbItems + startingId; i++) {
             Course testingCourse = new Course();
-            testingCourse.setId(i);
             testingCourse.setTitle("CourseTest" + i);
 
             service.storeEntity(testingCourse);

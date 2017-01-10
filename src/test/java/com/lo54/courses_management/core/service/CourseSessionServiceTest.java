@@ -80,7 +80,6 @@ public class CourseSessionServiceTest extends BaseServiceTest {
 
         Course course = new Course();
         course.setTitle("CourseTest" + id);
-        course.setId(id);
 
         try {
             courseDAO.insertEntity(course);
