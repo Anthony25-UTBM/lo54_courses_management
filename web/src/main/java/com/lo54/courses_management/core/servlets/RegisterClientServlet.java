@@ -9,6 +9,7 @@ import com.lo54.courses_management.core.entity.Client;
 import com.lo54.courses_management.core.entity.CourseSession;
 import com.lo54.courses_management.core.service.ClientService;
 import com.lo54.courses_management.core.service.CourseSessionService;
+import com.lo54.courses_management.core.service.LocationService;
 import main.java.com.lo54.courses_management.core.servlets.util.Param;
 
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 
 @WebServlet(
         name = "RegisterClientServlet",
@@ -33,7 +35,7 @@ public class RegisterClientServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
+    protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
             throws ServletException, IOException {
 
         response.setContentType(Param.CONTENT_TYPE);
@@ -54,13 +56,33 @@ public class RegisterClientServlet extends HttpServlet {
 
         CourseSessionService courseSessionService = new CourseSessionService();
 
-        CourseSession courseSession = new CourseSession();
+        int idCourseSession = Integer.parseInt(request.getParameter(Param.ATTRIBUTE_COURSE_SESSION_ID));
 
-        //int idCourseSession = Integer.parseInt(request.getParameter(Param.ATTRIBUTE_COURSE_SESSION_ID));
-        //courseSession.getClients().add(client);
-        //courseSessionService.updateEntity(idCourseSession, courseSession);
+        CourseSession courseSession = (CourseSession)courseSessionService.getEntity(idCourseSession);
+        courseSession.getClients().add(client);
+        courseSessionService.updateEntity(idCourseSession, courseSession);
+
+        request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, new LocationService().getEntities());
+        request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, courseSessionService.getEntities());
 
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        response.setContentType(Param.CONTENT_TYPE);
+
+        int idCourseSession = Integer.parseInt(request.getParameter(Param.ATTRIBUTE_COURSE_SESSION_ID));
+
+        CourseSessionService courseSessionService = new CourseSessionService();
+        CourseSession courseSession = (CourseSession) courseSessionService.getEntity(idCourseSession);
+
+        Set clientsOfCourse = courseSession.getClients();
+        request.setAttribute(Param.ATTRIBUTE_COURSE_CLIENTS, clientsOfCourse);
+
+        request.getRequestDispatcher(Param.PATH_LIST_CLIENTS).forward(request, response);
     }
 
 }

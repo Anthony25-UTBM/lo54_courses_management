@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="true" %>
 <html>
 <head>
@@ -56,6 +57,7 @@
                         <td>Start date</td>
                         <td>End date</td>
                         <td></td>
+                        <td></td>
                     </tr>
                     </thead>
                     <c:forEach var="courseSession" items="${listCoursesSession}">
@@ -63,10 +65,10 @@
                             <td>${courseSession.id}</td>
                             <td>${courseSession.course.title}</td>
                             <td>${courseSession.location.city}</td>
-                            <td>${courseSession.startDate}</td>
-                            <td>${courseSession.endDate}</td>
-                            <!--onclick=""-->
-                            <td><a href="${pageContext.request.contextPath}/jsp/registerClient.jsp">Register <span class="glyphicon glyphicon-plus"/></a></td>
+                            <td><fmt:formatDate value="${courseSession.startDate}" pattern="dd-MM-yyyy"/></td>
+                            <td><fmt:formatDate value="${courseSession.endDate}" pattern="dd-MM-yyyy"/></td>
+                            <td><a href="${pageContext.request.contextPath}/jsp/registerClient.jsp?idCourseSession=${courseSession.id}">Register <span class="glyphicon glyphicon-plus"/></a></td>
+                            <td><a href="${pageContext.request.contextPath}/registerClient?idCourseSession=${courseSession.id}">See clients <span class="glyphicon glyphicon-search"/></a></td>
                         </tr>
                     </c:forEach>
                 </table>

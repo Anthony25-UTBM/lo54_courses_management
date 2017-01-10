@@ -14,12 +14,14 @@ public class Param {
         public static final String COURSE_SESSION_LOCATION = "location";
         public static final String COURSE_SESSION_START_DATE = "startDate";
         public static final String COURSE_SESSION_END_DATE = "endDate";
+        public static final String ATTRIBUTE_COURSE_SESSION_ID = "idCourseSession";
 
         public static final String FILTER_LOCATION = "fLocation";
         public static final String ATTRIBUTE_FILTER_LOCATION = "locations";
-
+        public static final String ATTRIBUTE_COURSE_CLIENTS = "courseClients";
 
         public static final String PATH_LIST_COURSES = "/jsp/list_course_sessions.jsp";
+        public static final String PATH_LIST_CLIENTS = "/jsp/clientTab.jsp";
 
         public static final String DATE = "date";
 
