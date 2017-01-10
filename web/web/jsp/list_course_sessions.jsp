@@ -14,23 +14,32 @@
     <br/>
     <!--Search Form -->
     <form action="${pageContext.request.contextPath}/filterCourseNameServlet" method="post" id="searchCourseSessionForm" role="form">
-        <div class="form-group col-xs-6">
+        <div>
             <input type="text" name="keyword" id="keyword" class="form-control" placeholder="Type the keyword you want to look for"/>
         </div>
         <button type="submit" class="btn btn-info">
-            <span class="glyphicon glyphicon-search"></span> Search
+            <span class="glyphicon glyphicon-search"></span> Search title
+        </button>
+        <br/>
+    </form>
+
+    <form action="${pageContext.request.contextPath}/filterCourseLocationServlet" method="post" id="searchCourseByLocationForm" role="form">
+        <div>
+            <input type="text" name="fLocation" id="location" class="form-control" placeholder="Type the keyword you want to look for"/>
+        </div>
+        <button type="submit" class="btn btn-info">
+            <span class="glyphicon glyphicon-search"></span> Search location
         </button>
         <br/>
     </form>
 
 
-
     <form action="${pageContext.request.contextPath}/filterCourseDateServlet" method="post" id="searchCourseSessionByDateForm" role="form">
-        <div class="form-group col-xs-2">
+        <divr>
             <input type="text" name="date" id="date" class="form-control" placeholder="jj-mm-yyyy"/>
-        </div>
+        </divr>
         <button type="submit" class="btn btn-info">
-            <span class="glyphicon glyphicon-search"></span> Filter
+            <span class="glyphicon glyphicon-search"></span> Filter date
         </button>
         <br/>
     </form>

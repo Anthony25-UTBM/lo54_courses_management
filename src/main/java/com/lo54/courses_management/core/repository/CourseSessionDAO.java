@@ -44,6 +44,11 @@ public class CourseSessionDAO extends DefaultDAO<CourseSession> {
         return listEntities;
     }
 
+    @Override
+    public List getEntities() {
+        return super.getEntities();
+    }
+
     public List<CourseSession> getEntitiesByLocation(String filter) {
         final Session session = HibernateUtil.getSession();
         List listEntities = null;
@@ -90,21 +95,21 @@ public class CourseSessionDAO extends DefaultDAO<CourseSession> {
             LOGGER.error("getEntities" + e);
         }
 
-        List<CourseSession> listEntities2 = null;
+        List<CourseSession> listCourseSession = null;
 
         if (listEntities != null) {
             for(Course course : listEntities) {
                 try {
                     Query query = session.createQuery(
-                        "from " + CourseSession.class.getCanonicalName() + " where course like :code"
+                        "from " + CourseSession.class.getCanonicalName() + " where course = :code"
                     );
                     query.setParameter("code", course);
-                    listEntities2 = query.list();
+                    listCourseSession = query.list();
                 }catch (HibernateException e) {
                     LOGGER.error("getEntities" + e);
                 }
             }
         }
-        return listEntities2;
+        return listCourseSession;
     }
 }

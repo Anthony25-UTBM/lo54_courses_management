@@ -39,8 +39,12 @@ public class FilterCourseLocationServlet extends HttpServlet {
         CourseSessionService courseSessionService = new CourseSessionService();
         String location = request.getParameter(Param.FILTER_LOCATION);
 
-        List<CourseSession> listCoursesSession = courseSessionService.getEntitiesByLocation(location);
+        List<CourseSession> listCoursesSession = null;
 
+        listCoursesSession = courseSessionService.getEntitiesByLocation(location);
+        if(listCoursesSession.size() < 1){
+            listCoursesSession = courseSessionService.getEntities();
+        }
         request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, listCoursesSession);
 
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);

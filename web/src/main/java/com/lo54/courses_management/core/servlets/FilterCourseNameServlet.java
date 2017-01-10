@@ -1,15 +1,12 @@
 package main.java.com.lo54.courses_management.core.servlets;
 
 
-import com.lo54.courses_management.core.entity.CourseSession;
-import com.lo54.courses_management.core.repository.CourseSessionDAO;
+
 import com.lo54.courses_management.core.service.CourseSessionService;
 import main.java.com.lo54.courses_management.core.servlets.util.Param;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +35,7 @@ public class FilterCourseNameServlet extends HttpServlet {
         response.setContentType(Param.CONTENT_TYPE);
 
         String keyword = request.getParameter("keyword");
-        List<CourseSession> result = null;
+        List result;
 
         CourseSessionService courseSessionService = new CourseSessionService();
 
