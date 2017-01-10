@@ -16,23 +16,19 @@
         <br/>
             <div class="form-group col-xs-4">
                 <label for="title">Title:</label>
-                <input type="text" class="form-control" id="title" required="true">
-            </div>
-            <div class="form-group col-xs-4">
-                <label for="code">Code:</label>
-                <input type="text" class="form-control" id="code" required="true">
+                <input type="text" class="form-control" name="title" id="title" required="true">
             </div>
             <div class="form-group col-xs-4">
                 <label for="location">City:</label>
-                <input type="text" class="form-control" id="location" required="true">
+                <input type="text" class="form-control" name="location" id="location" required="true">
             </div>
             <div class="form-group col-xs-4">
                 <label for="startDate">Start date:</label>
-                <input type="text" class="form-control" id="startDate" placeholder="dd-mm-yyyy" required="true">
+                <input type="text" class="form-control" id="startDate" name="startDate" placeholder="dd-mm-yyyy" required="true">
             </div>
             <div class="form-group col-xs-4">
                 <label for="endDate">End date:</label>
-                <input type="text" class="form-control" id="endDate" placeholder="dd-mm-yyyy" required="true">
+                <input type="text" class="form-control" id="endDate" name="endDate" placeholder="dd-mm-yyyy" required="true">
             </div>
             <br/>
             <br/>

@@ -23,6 +23,8 @@
         <br/>
     </form>
 
+
+
     <form action="${pageContext.request.contextPath}/filterCourseDateServlet" method="post" id="searchCourseSessionByDateForm" role="form">
         <div class="form-group col-xs-2">
             <input type="text" name="date" id="date" class="form-control" placeholder="jj-mm-yyyy"/>
@@ -32,22 +34,6 @@
         </button>
         <br/>
     </form>
-
-    <!--<div class="dropdown">
-    <form action="${pageContext.request.contextPath}/filterCourseLocationServlet" method="post" id="searchCourseSessionByLocationForm" role="form">
-        <select name="Cities" id="citiesDropDown">
-            <c:forEach items="${locations}" var="locationOption" >
-                <option>${locationOption.city}</option>
-            </c:forEach>
-        </select>
-        <br/>
-        <script>
-            $('#citiesDropDown').change(function(){
-                var city = $("#citiesDropDown").val());
-                request.setAttribute("fLocation", city);
-            })
-        </script>
-    </form></div>-->
 
 
     <!-- List of courses -->
@@ -82,7 +68,6 @@
                 <br/>
                 <div class="alert alert-info">
                     No course session found matching your search criteria
-                    <a href="${pageContext.request.contextPath}/jsp/registerClient.jsp">Register <span class="glyphicon glyphicon-plus"/></a>
                 </div>
             </c:otherwise>
         </c:choose>

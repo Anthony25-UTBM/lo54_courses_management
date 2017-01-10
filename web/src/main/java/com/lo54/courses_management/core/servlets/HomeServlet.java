@@ -6,8 +6,10 @@
 package main.java.com.lo54.courses_management.core.servlets;
 
 import com.lo54.courses_management.core.entity.CourseSession;
+import com.lo54.courses_management.core.entity.Location;
 import com.lo54.courses_management.core.service.CourseService;
 import com.lo54.courses_management.core.service.CourseSessionService;
+import com.lo54.courses_management.core.service.LocationService;
 import main.java.com.lo54.courses_management.core.servlets.util.Param;
 
 import java.io.IOException;
@@ -43,6 +45,11 @@ public class HomeServlet extends HttpServlet {
         List<CourseSession> allEntities = courseSessionService.getEntities();
 
         request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, allEntities);
+
+        LocationService locationService = new LocationService();
+        List<Location> listLocations = locationService.getEntities();
+
+        request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, listLocations);
 
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);
     }
