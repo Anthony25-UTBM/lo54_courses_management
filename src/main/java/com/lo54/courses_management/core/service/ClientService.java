@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ClientService implements Service{
 
-    private ClientDAO clientDao;
+    protected ClientDAO clientDao;
 
     public ClientService(){
         clientDao = new ClientDAO();

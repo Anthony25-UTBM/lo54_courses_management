@@ -2,8 +2,15 @@ package com.lo54.courses_management.core.service;
 
 import com.lo54.courses_management.core.entity.Client;
 import com.lo54.courses_management.core.entity.Item;
+import com.lo54.courses_management.core.util.HibernateUtil;
 import com.lo54.courses_management.helpers.HibernateTestHelper;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
 
 import java.util.ArrayList;
 
@@ -30,6 +37,43 @@ public abstract class BaseServiceTest extends HibernateTestHelper {
     public void removeEntity() throws Exception {
         service.removeEntity(item.getId());
         assertEquals(0, service.getEntities().size());
+    }
+
+    @Test(expected = HibernateException.class)
+    public void removeEntityWithError() throws Exception {
+        mockBrokenTransaction();
+        service.removeEntity(item.getId());
+    }
+
+    /**
+     * Test if after a broken operation, transactions can still be done
+     * @throws Exception
+     */
+    @Test
+    public void removeEntityWithErrorAndTestTransaction() throws Exception {
+        mockBrokenTransaction();
+
+        try {
+            service.removeEntity(item.getId());
+        } catch(HibernateException e) {}
+        createTestingConfiguration();
+
+        setUp();
+        getEntity();
+    }
+
+    protected void mockBrokenTransaction() throws Exception {
+        SessionFactory mockedSessionFactory = Mockito.mock(SessionFactory.class);
+        Session mockedSession = PowerMockito.mock(Session.class);
+
+        Transaction mockedTransaction = PowerMockito.mock(Transaction.class);
+        PowerMockito.doThrow(new HibernateException("")).when(mockedTransaction, "commit");
+        PowerMockito.doReturn(mockedTransaction).when(mockedSession, "getTransaction");
+        Mockito.when(mockedSession.beginTransaction()).thenReturn(mockedTransaction);
+        Mockito.when(mockedSessionFactory.openSession()).thenReturn(mockedSession);
+
+        HibernateUtil.setSessionFactory(mockedSessionFactory);
+        HibernateUtil.setSession(mockedSession);
     }
 
     @Test

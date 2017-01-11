@@ -39,4 +39,8 @@ public class HibernateUtil {
         }
         return session;
     }
+
+    public static void setSession(Session _session) {
+        session = _session;
+    }
 }

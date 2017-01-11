@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CourseService implements Service{
 
-    private CourseDAO courseDao;
+    protected CourseDAO courseDao;
 
     public CourseService(){
         this.courseDao = new CourseDAO();

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class LocationService implements Service{
 
-    private final LocationDAO locationDao;
+    protected final LocationDAO locationDao;
 
     public LocationService() {
         locationDao = new LocationDAO();

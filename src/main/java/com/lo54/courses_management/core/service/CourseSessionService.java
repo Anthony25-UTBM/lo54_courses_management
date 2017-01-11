@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CourseSessionService implements Service {
 
-    CourseSessionDAO courseSessionDao;
+    protected CourseSessionDAO courseSessionDao;
 
     public CourseSessionService(){
         courseSessionDao = new CourseSessionDAO();
