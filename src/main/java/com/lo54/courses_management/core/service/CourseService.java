@@ -19,19 +19,19 @@ public class CourseService implements Service{
         this.courseDao.insertEntity((Course) entity);
     }
 
-    public void updateEntity(int id, Item entity) {
+    public void updateEntity(int id, Item entity) throws Exception {
         this.courseDao.updateEntity(id, (Course) entity);
     }
 
-    public void removeEntity(int id) {
+    public void removeEntity(int id) throws Exception {
         this.courseDao.removeEntity(id);
     }
 
-    public Item getEntity(int id) {
+    public Item getEntity(int id) throws Exception {
         return this.courseDao.getEntity(id);
     }
 
-    public List getEntities() {
+    public List getEntities() throws Exception {
         return this.courseDao.getEntities();
     }
 }

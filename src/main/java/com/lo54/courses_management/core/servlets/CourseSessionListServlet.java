@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -52,7 +53,13 @@ public class CourseSessionListServlet extends HttpServlet{
         LocationService locationService = new LocationService();
         locationService.storeEntity(location);
 
-        List<Location> listLoc = new LocationService().getEntities();
+        List<Location> listLoc = null;
+        try {
+            listLoc = new LocationService().getEntities();
+        } catch (Exception e) {
+            e.printStackTrace();
+            listLoc = new ArrayList<>();
+        }
         request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, listLoc);
 
         courseSession.setLocation(location);
@@ -74,7 +81,13 @@ public class CourseSessionListServlet extends HttpServlet{
         CourseSessionService courseSessionService = new CourseSessionService();
         courseSessionService.storeEntity(courseSession);
 
-        List listCourse = (List<CourseSession>)courseSessionService.getEntities();
+        List listCourse = null;
+        try {
+            listCourse = (List<CourseSession>)courseSessionService.getEntities();
+        } catch (Exception e) {
+            e.printStackTrace();
+            listCourse = new ArrayList();
+        }
 
         request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, listCourse);
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);

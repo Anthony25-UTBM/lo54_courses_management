@@ -58,12 +58,27 @@ public class RegisterClientServlet extends HttpServlet {
 
         int idCourseSession = Integer.parseInt(request.getParameter(Param.ATTRIBUTE_COURSE_SESSION_ID));
 
-        CourseSession courseSession = (CourseSession)courseSessionService.getEntity(idCourseSession);
-        courseSession.getClients().add(client);
-        courseSessionService.updateEntity(idCourseSession, courseSession);
+        CourseSession courseSession = null;
+        try {
+            courseSession = (CourseSession)courseSessionService.getEntity(idCourseSession);
+            courseSession.getClients().add(client);
+            courseSessionService.updateEntity(idCourseSession, courseSession);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
 
-        request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, new LocationService().getEntities());
-        request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, courseSessionService.getEntities());
+        try {
+            request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, new LocationService().getEntities());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, courseSessionService.getEntities());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);
     }
@@ -77,10 +92,14 @@ public class RegisterClientServlet extends HttpServlet {
         int idCourseSession = Integer.parseInt(request.getParameter(Param.ATTRIBUTE_COURSE_SESSION_ID));
 
         CourseSessionService courseSessionService = new CourseSessionService();
-        CourseSession courseSession = (CourseSession) courseSessionService.getEntity(idCourseSession);
-
-        Set clientsOfCourse = courseSession.getClients();
-        request.setAttribute(Param.ATTRIBUTE_COURSE_CLIENTS, clientsOfCourse);
+        CourseSession courseSession = null;
+        try {
+            courseSession = (CourseSession) courseSessionService.getEntity(idCourseSession);
+            Set clientsOfCourse = courseSession.getClients();
+            request.setAttribute(Param.ATTRIBUTE_COURSE_CLIENTS, clientsOfCourse);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         request.getRequestDispatcher(Param.PATH_LIST_CLIENTS).forward(request, response);
     }

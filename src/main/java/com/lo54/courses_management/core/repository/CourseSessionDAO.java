@@ -45,7 +45,7 @@ public class CourseSessionDAO extends DefaultDAO<CourseSession> {
     }
 
     @Override
-    public List getEntities() {
+    public List getEntities() throws Exception {
         return super.getEntities();
     }
 

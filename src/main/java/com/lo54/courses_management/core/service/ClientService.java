@@ -19,19 +19,19 @@ public class ClientService implements Service{
         this.clientDao.insertEntity((Client) entity);
     }
 
-    public void updateEntity(int id, Item entity) {
+    public void updateEntity(int id, Item entity) throws Exception {
         this.clientDao.updateEntity(id, (Client) entity);
     }
 
-    public void removeEntity(int id){
+    public void removeEntity(int id) throws Exception {
         this.clientDao.removeEntity(id);
     }
 
-    public Item getEntity(int id) {
+    public Item getEntity(int id) throws Exception {
         return this.clientDao.getEntity(id);
     }
 
-    public List getEntities() {
+    public List getEntities() throws Exception {
         return this.clientDao.getEntities();
     }
 }

@@ -41,14 +41,23 @@ public class HomeServlet extends HttpServlet {
         response.setContentType(Param.CONTENT_TYPE);
 
         CourseSessionService courseSessionService = new CourseSessionService();
-        List<CourseSession> allEntities = courseSessionService.getEntities();
+        List<CourseSession> allEntities = null;
+        try {
+            allEntities = courseSessionService.getEntities();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, allEntities);
 
         LocationService locationService = new LocationService();
-        List<Location> listLocations = locationService.getEntities();
-
-        request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, listLocations);
+        List<Location> listLocations = null;
+        try {
+            listLocations = locationService.getEntities();
+            request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, listLocations);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);
     }

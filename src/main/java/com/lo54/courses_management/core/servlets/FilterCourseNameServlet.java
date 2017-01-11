@@ -2,11 +2,13 @@ package com.lo54.courses_management.core.servlets;
 
 
 
+import com.lo54.courses_management.core.entity.CourseSession;
 import com.lo54.courses_management.core.service.CourseSessionService;
 import com.lo54.courses_management.core.service.LocationService;
 import com.lo54.courses_management.core.servlets.util.Param;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,13 +41,21 @@ public class FilterCourseNameServlet extends HttpServlet {
         List result;
 
         CourseSessionService courseSessionService = new CourseSessionService();
-
             result = courseSessionService.getEntitiesByTitle(keyword);
             if(result == null){
-                result = courseSessionService.getEntities();
-             }
+                try {
+                    result = courseSessionService.getEntities();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result = new ArrayList<CourseSession>();
+                }
+            }
         request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, result);
-        request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, new LocationService().getEntities());
+        try {
+            request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, new LocationService().getEntities());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);
       
     }

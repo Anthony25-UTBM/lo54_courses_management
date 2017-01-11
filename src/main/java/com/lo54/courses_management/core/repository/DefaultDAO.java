@@ -2,6 +2,7 @@ package com.lo54.courses_management.core.repository;
 
 import com.lo54.courses_management.core.entity.Item;
 import com.lo54.courses_management.core.util.HibernateUtil;
+import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,6 +10,7 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public abstract class DefaultDAO<T extends Item> {
@@ -35,6 +37,7 @@ public abstract class DefaultDAO<T extends Item> {
             LOGGER.error("error in insertEntity: " + e);
             if(tr != null)
                 tr.rollback();
+            throw e;
         }
     }
 
@@ -43,57 +46,90 @@ public abstract class DefaultDAO<T extends Item> {
      * @param id
      * @param entity
      */
-    public void updateEntity(int id, T entity) {
+    public void updateEntity(int id, T entity) throws Exception {
+        T storedEntity = getEntity(id);
 
+        try {
+            BeanUtils.copyProperties(storedEntity, entity);
+        } catch (IllegalAccessException|InvocationTargetException e) {
+            LOGGER.error("error in updateEntity: " + e);
+            throw e;
+        }
+
+        Session session = HibernateUtil.getSession();
+        Transaction tr = session.getTransaction();
+        try {
+            tr.begin();
+            session.update(entity);
+            tr.commit();
+        } catch(Exception e) {
+            LOGGER.error("error in updateEntity: " + e);
+            if(tr != null)
+                tr.rollback();
+            throw e;
+        }
     }
 
     /**
      * To remove an entity into the database
      * @param id
      */
-    public void removeEntity(int id) {
+    public void removeEntity(int id) throws Exception {
         Item entity = getEntity(id);
+
         Session session = HibernateUtil.getSession();
-        try{
-            session.beginTransaction();
+        Transaction tr = session.getTransaction();
+        try {
+            tr.begin();
             session.delete(entity);
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
+            tr.commit();
+        } catch(Exception e) {
             LOGGER.error("error in removeEntity: " + e);
+            if(tr != null)
+                tr.rollback();
+            throw e;
         }
     }
 
     /**
-     * To get an entity from his id and class
+     * To get an entity from its id and class
      * @param id
      * @return
      */
     @SuppressWarnings(value="unchecked")
-    public T getEntity(int id) {
-        Session session = HibernateUtil.getSession();
+    public T getEntity(int id) throws Exception {
         T entity = null;
+
+        Session session = HibernateUtil.getSession();
+        Transaction tr = session.getTransaction();
         try {
-            session.beginTransaction();
+            tr.begin();
             entity = (T) session.get(entityType.getCanonicalName(), id);
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
+            tr.commit();
+        } catch(Exception e) {
             LOGGER.error("error in getEntity: " + e);
+            if(tr != null)
+                tr.rollback();
+            throw e;
         }
+
         return entity;
     }
 
     /**
-     * To get all the entities
+     * To get all entities
      * @return
      */
-    public List getEntities() {
-        Session session = HibernateUtil.getSession();
+    public List getEntities() throws Exception {
         List listEntities = null;
+
+        Session session = HibernateUtil.getSession();
         try {
             Query query = session.createQuery("from " + entityType.getCanonicalName());
             listEntities = query.list();
         }catch (HibernateException e) {
             LOGGER.error("error in getEntities: " + e);
+            throw e;
         }
         return listEntities;
     }

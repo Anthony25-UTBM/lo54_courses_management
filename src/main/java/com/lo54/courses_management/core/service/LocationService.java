@@ -20,21 +20,21 @@ public class LocationService implements Service{
 
     }
 
-    public void updateEntity(int id, Item entity) {
+    public void updateEntity(int id, Item entity) throws Exception {
         this.locationDao.updateEntity(id, (Location) entity);
 
     }
 
-    public void removeEntity(int id) {
+    public void removeEntity(int id) throws Exception {
         this.locationDao.removeEntity(id);
 
     }
 
-    public Item getEntity(int id) {
+    public Item getEntity(int id) throws Exception {
         return this.locationDao.getEntity(id);
     }
 
-    public List getEntities() {
+    public List getEntities() throws Exception {
         return this.locationDao.getEntities();
     }
 }

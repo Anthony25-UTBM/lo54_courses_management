@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -61,9 +62,18 @@ public class FilterCourseDateServlet extends HttpServlet {
         }
 
         if(listCoursesSession.size() < 1){
-            listCoursesSession = courseSessionService.getEntities();
+            try {
+                listCoursesSession = courseSessionService.getEntities();
+            } catch (Exception e) {
+                listCoursesSession = new ArrayList<>();
+                e.printStackTrace();
+            }
         }
-        request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, new LocationService().getEntities());
+        try {
+            request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, new LocationService().getEntities());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, listCoursesSession);
 
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);

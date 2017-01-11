@@ -18,24 +18,24 @@ public interface Service {
      * @param id
      * @param entity
      */
-    void updateEntity(int id, final Item entity);
+    void updateEntity(int id, final Item entity) throws Exception;
 
     /**
      * To remove an entity
      * @param id
      */
-    void removeEntity(int id);
+    void removeEntity(int id) throws Exception;
 
     /**
      * To get an entity by his id
      * @param id
      * @return
      */
-    Item getEntity(int id);
+    Item getEntity(int id) throws Exception;
 
     /**
      * To get the list of entities
      * @return
      */
-    List getEntities();
+    List getEntities() throws Exception;
 }

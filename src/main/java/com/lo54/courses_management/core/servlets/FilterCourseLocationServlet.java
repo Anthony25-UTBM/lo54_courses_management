@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(
@@ -42,11 +43,20 @@ public class FilterCourseLocationServlet extends HttpServlet {
 
         listCoursesSession = courseSessionService.getEntitiesByLocation(location);
         if(listCoursesSession.size() < 1){
-            listCoursesSession = courseSessionService.getEntities();
+            try {
+                listCoursesSession = courseSessionService.getEntities();
+            } catch (Exception e) {
+                e.printStackTrace();
+                listCoursesSession = new ArrayList<>();
+            }
         }
 
         //resets the list of locations but doesn't keep the last one selected
-        request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, new LocationService().getEntities());
+        try {
+            request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, new LocationService().getEntities());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, listCoursesSession);
 
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);
