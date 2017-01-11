@@ -6,7 +6,6 @@ import com.lo54.courses_management.core.entity.Item;
 import com.lo54.courses_management.core.repository.CourseSessionDAO;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 public class CourseSessionService implements Service {
@@ -45,7 +44,7 @@ public class CourseSessionService implements Service {
         return this.courseSessionDao.getEntitiesByLocation(filter);
     }
 
-    public List getEntitiesByTimeStamp(Timestamp tmin, Timestamp tmax) {
-        return this.courseSessionDao.getEntitiesByTimeStamp(tmin, tmax);
+    public List getEntitiesBetweenTimestamps(Timestamp tmin, Timestamp tmax) {
+        return this.courseSessionDao.getEntitiesBetweenTimestamps(tmin, tmax);
     }
 }

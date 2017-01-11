@@ -5,7 +5,6 @@ import com.lo54.courses_management.core.repository.ClientDAO;
 import com.lo54.courses_management.core.repository.CourseDAO;
 import com.lo54.courses_management.core.repository.CourseSessionDAO;
 import com.lo54.courses_management.core.repository.LocationDAO;
-import com.lo54.courses_management.helpers.HibernateTestHelper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -134,8 +133,8 @@ public class CourseSessionServiceTest extends BaseServiceTest {
     }
 
     @Test
-    public void getEntitiesByTimeStamp() throws Exception {
-        List matchingItems = ((CourseSessionService) service).getEntitiesByTimeStamp(
+    public void getEntitiesBetweenTimestamps() throws Exception {
+        List matchingItems = ((CourseSessionService) service).getEntitiesBetweenTimestamps(
             new Timestamp(((CourseSession) item).getStartDate().getTime() - 10),
             new Timestamp(((CourseSession) item).getEndDate().getTime() + 10)
         );

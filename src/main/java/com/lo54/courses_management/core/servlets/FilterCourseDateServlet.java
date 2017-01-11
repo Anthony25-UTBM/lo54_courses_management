@@ -56,7 +56,7 @@ public class FilterCourseDateServlet extends HttpServlet {
             calendar.set(Calendar.DATE, day + 1);
             Timestamp endDate = new Timestamp(calendar.getTimeInMillis());
 
-            listCoursesSession = courseSessionService.getEntitiesByTimeStamp(startDate, endDate);
+            listCoursesSession = courseSessionService.getEntitiesBetweenTimestamps(startDate, endDate);
 
             request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, listCoursesSession);
         }

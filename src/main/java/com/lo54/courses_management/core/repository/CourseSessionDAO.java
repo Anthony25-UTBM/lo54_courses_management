@@ -26,7 +26,7 @@ public class CourseSessionDAO extends DefaultDAO<CourseSession> {
         entityType = CourseSession.class;
     }
 
-    public List getEntitiesByTimeStamp(Timestamp tmin, Timestamp tmax) {
+    public List getEntitiesBetweenTimestamps(Timestamp tmin, Timestamp tmax) {
         final Session session = HibernateUtil.getSession();
         List listEntities = null;
 
