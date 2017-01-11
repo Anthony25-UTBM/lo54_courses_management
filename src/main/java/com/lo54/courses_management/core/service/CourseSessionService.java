@@ -6,6 +6,7 @@ import com.lo54.courses_management.core.entity.Item;
 import com.lo54.courses_management.core.repository.CourseSessionDAO;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 public class CourseSessionService implements Service {

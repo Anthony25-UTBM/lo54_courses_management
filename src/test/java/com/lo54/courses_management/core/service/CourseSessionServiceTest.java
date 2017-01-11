@@ -9,10 +9,8 @@ import com.lo54.courses_management.helpers.HibernateTestHelper;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -21,7 +19,6 @@ import static org.junit.Assert.assertTrue;
  * Created by anthony on 16/12/16.
  */
 public class CourseSessionServiceTest extends BaseServiceTest {
-
     @Before
     public void setUp() throws Exception {
         super.setUp();
@@ -116,5 +113,33 @@ public class CourseSessionServiceTest extends BaseServiceTest {
 
         CourseSession storedCourseSession = (CourseSession) service.getEntity(courseSession.getId());
         assertEquals(courseSession.getLocation(), storedCourseSession.getLocation());
+    }
+
+    @Test
+    public void getEntitiesByTitle() throws Exception {
+        List matchingItems = ((CourseSessionService) service).getEntitiesByTitle(
+            ((CourseSession) item).getCourse().getTitle()
+        );
+
+        assertTrue(matchingItems.contains(item));
+    }
+
+    @Test
+    public void getEntitiesByLocation() throws Exception {
+        List matchingItems = ((CourseSessionService) service).getEntitiesByLocation(
+            ((CourseSession) item).getLocation().getCity()
+        );
+
+        assertTrue(matchingItems.contains(item));
+    }
+
+    @Test
+    public void getEntitiesByTimeStamp() throws Exception {
+        List matchingItems = ((CourseSessionService) service).getEntitiesByTimeStamp(
+            new Timestamp(((CourseSession) item).getStartDate().getTime() - 10),
+            new Timestamp(((CourseSession) item).getEndDate().getTime() + 10)
+        );
+
+        assertTrue(matchingItems.contains(item));
     }
 }
