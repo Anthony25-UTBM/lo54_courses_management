@@ -1,4 +1,4 @@
-package main.java.com.lo54.courses_management.core.servlets;
+package com.lo54.courses_management.core.servlets;
 
 import com.lo54.courses_management.core.entity.Course;
 import com.lo54.courses_management.core.entity.CourseSession;
@@ -6,7 +6,7 @@ import com.lo54.courses_management.core.entity.Location;
 import com.lo54.courses_management.core.service.CourseService;
 import com.lo54.courses_management.core.service.CourseSessionService;
 import com.lo54.courses_management.core.service.LocationService;
-import main.java.com.lo54.courses_management.core.servlets.util.Param;
+import com.lo54.courses_management.core.servlets.util.Param;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

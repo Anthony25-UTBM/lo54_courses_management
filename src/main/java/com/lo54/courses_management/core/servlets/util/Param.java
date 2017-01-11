@@ -1,4 +1,4 @@
-package main.java.com.lo54.courses_management.core.servlets.util;
+package com.lo54.courses_management.core.servlets.util;
 
 
 public class Param {

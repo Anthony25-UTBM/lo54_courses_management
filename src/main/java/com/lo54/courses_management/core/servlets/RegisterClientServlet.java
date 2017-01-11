@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.com.lo54.courses_management.core.servlets;
+package com.lo54.courses_management.core.servlets;
 
 import com.lo54.courses_management.core.entity.Client;
 import com.lo54.courses_management.core.entity.CourseSession;
 import com.lo54.courses_management.core.service.ClientService;
 import com.lo54.courses_management.core.service.CourseSessionService;
 import com.lo54.courses_management.core.service.LocationService;
-import main.java.com.lo54.courses_management.core.servlets.util.Param;
+import com.lo54.courses_management.core.servlets.util.Param;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

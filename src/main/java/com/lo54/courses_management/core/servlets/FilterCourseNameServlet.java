@@ -1,24 +1,24 @@
-package main.java.com.lo54.courses_management.core.servlets;
+package com.lo54.courses_management.core.servlets;
 
 
-import com.lo54.courses_management.core.entity.CourseSession;
+
 import com.lo54.courses_management.core.service.CourseSessionService;
 import com.lo54.courses_management.core.service.LocationService;
-import main.java.com.lo54.courses_management.core.servlets.util.Param;
+import com.lo54.courses_management.core.servlets.util.Param;
 
+import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
 
 @WebServlet(
-        name = "FilterCourseLocationServlet",
-        urlPatterns = {"/filterCourseLocationServlet"}
+        name = "FilterCourseNameServlet",
+        urlPatterns = {"/filterCourseNameServlet"}
 )
-public class FilterCourseLocationServlet extends HttpServlet {
+public class FilterCourseNameServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,20 +35,17 @@ public class FilterCourseLocationServlet extends HttpServlet {
 
         response.setContentType(Param.CONTENT_TYPE);
 
+        String keyword = request.getParameter("keyword");
+        List result;
+
         CourseSessionService courseSessionService = new CourseSessionService();
-        String location = request.getParameter(Param.FILTER_LOCATION);
 
-        List<CourseSession> listCoursesSession = null;
-
-        listCoursesSession = courseSessionService.getEntitiesByLocation(location);
-        if(listCoursesSession.size() < 1){
-            listCoursesSession = courseSessionService.getEntities();
-        }
-
-        //resets the list of locations but doesn't keep the last one selected
+            result = courseSessionService.getEntitiesByTitle(keyword);
+            if(result == null){
+                result = courseSessionService.getEntities();
+             }
+        request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, result);
         request.setAttribute(Param.ATTRIBUTE_FILTER_LOCATION, new LocationService().getEntities());
-        request.setAttribute(Param.ATTRIBUTE_LIST_COURSES_SESSION, listCoursesSession);
-
         request.getRequestDispatcher(Param.PATH_LIST_COURSES).forward(request, response);
       
     }
